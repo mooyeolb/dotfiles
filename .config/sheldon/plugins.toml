@@ -1,0 +1,95 @@
+# `sheldon` configuration file
+# ----------------------------
+#
+# You can modify this file directly or you can use one of the following
+# `sheldon` commands which are provided to assist in editing the config file:
+#
+# - `sheldon add` to add a new plugin to the config file
+# - `sheldon edit` to open up the config file in the default editor
+# - `sheldon remove` to remove a plugin from the config file
+#
+# See the documentation for more https://github.com/rossmacarthur/sheldon#readme
+
+shell = "zsh"
+
+[templates]
+defer = { value = 'zsh-defer source "{{ file }}"', each = true }
+
+
+# Completions
+# -----------
+
+[plugins.zsh-completions]
+github = "zsh-users/zsh-completions"
+
+[plugins.docker-zsh-completion]
+github = "greymd/docker-zsh-completion"
+
+[plugins.conda-zsh-completion]
+github = "esc/conda-zsh-completion"
+
+[plugins.compinit]
+inline = "autoload -Uz compinit && compinit"
+
+[plugins.kubectl-zsh-completion]
+inline = "source <(kubectl completion zsh)"
+
+[plugins.fzf-tab]
+github = "Aloxaf/fzf-tab"
+
+
+# Sourced
+# -------
+
+[plugins.zsh-defer]
+github = "romkatv/zsh-defer"
+
+[plugins.promptinit]
+inline = "autoload -Uz promptinit && promptinit"
+
+[plugins.pure]
+github = "sindresorhus/pure"
+use = ["async.zsh", "pure.zsh"]
+
+
+# Deferred plugins
+# ----------------
+
+[plugins.zsh-z]
+github = "agkozak/zsh-z"
+apply = ["defer"]
+
+[plugins.zsh-z-after]
+inline = "export ZSHZ_DATA=$XDG_CACHE_HOME/z"
+
+[plugins.zsh-syntax-highlighting]
+github = "zsh-users/zsh-syntax-highlighting"
+apply = ["defer"]
+
+[plugins.zsh-autosuggestions]
+github = "zsh-users/zsh-autosuggestions"
+apply = ["defer"]
+
+[plugins.zsh-history-substring-search]
+github = "zsh-users/zsh-history-substring-search"
+apply = ["defer"]
+
+[plugins.lscolors]
+github = "trapd00r/LS_COLORS"
+apply = ["defer"]
+
+[plugins.zsh-aliases-exa]
+github = "DarrinTisdale/zsh-aliases-exa"
+apply = ["defer"]
+
+[plugins.forgit]
+github = "wfxr/forgit"
+apply = ["defer"]
+
+[plugins.zsh-autoenv]
+github = "Tarrasch/zsh-autoenv"
+apply = ["defer"]
+
+[plugins.zsh-you-should-use]
+github = "MichaelAquilina/zsh-you-should-use"
+apply = ["defer"]
