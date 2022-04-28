@@ -26,7 +26,7 @@ bindkey -M emacs "^N" history-substring-search-down
 # aliases
 # -------
 
-alias config='/usr/bin/git --git-dir=$XDG_DATA_HOME/.git-dotfiles/ --work-tree=$HOME'
+alias config='/usr/bin/git --git-dir=$XDG_DATA_HOME/git-dotfiles/ --work-tree=$HOME'
 alias reload="exec $SHELL -l -i"  grep="command grep --colour=auto --binary-files=without-match --directories=skip"
 alias ls="exa -bh --color=auto"
 alias l="ls"      l.='ls -d .*'   la='ls -a'   ll='ls -lbt created'  rm='command rm -i'
@@ -58,6 +58,7 @@ unset __conda_setup
 # nvm
 export NVM_DIR="$HOME/.config/nvm"
 [ -s "$NVM_DIR/nvm.sh"  ] && \. "$NVM_DIR/nvm.sh"
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 
 
 # sheldon
