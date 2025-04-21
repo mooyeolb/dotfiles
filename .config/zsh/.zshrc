@@ -28,7 +28,7 @@ bindkey -M emacs "^N" history-substring-search-down
 
 alias config='/usr/bin/git --git-dir=$XDG_DATA_HOME/git-dotfiles/ --work-tree=$HOME'
 alias reload="exec $SHELL -l -i"  grep="command grep --colour=auto --binary-files=without-match --directories=skip"
-alias ls="exa -bh --color=auto"
+alias ls="eza -bh --color=auto"
 alias l="ls"      l.='ls -d .*'   la='ls -a'   ll='ls -lbt created'  rm='command rm -i'
 alias df='df -h'  du='du -h'      cp='cp -v'   mv='mv -v'      plast="last -20"
 alias ec='emacsclient -c -n -a ""'

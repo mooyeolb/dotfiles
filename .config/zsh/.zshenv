@@ -32,3 +32,9 @@ if [ -f "/usr/bin/go" ]; then
     export GOPATH=$XDG_DATA_HOME/go
     export PATH=${PATH:+${PATH}:}$GOROOT/bin:$GOPATH/bin
 fi
+
+if [ -f "$HOME/.local/share/cargo/bin/cargo" ]; then
+    export RUSTUP_HOME=$HOME/.local/share/rustup
+    export CARGO_HOME=$HOME/.local/share/cargo
+    . "/home/mooyeolb/.local/share/cargo/env"
+fi
