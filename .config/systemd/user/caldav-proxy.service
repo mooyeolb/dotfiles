@@ -1,0 +1,9 @@
+[Unit]
+Description=CalDAV privilege proxy
+
+[Service]
+ExecStart=/usr/bin/python3 %h/.local/bin/caldav-proxy.py
+Restart=always
+
+[Install]
+WantedBy=default.target
