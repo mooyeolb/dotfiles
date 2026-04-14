@@ -1,0 +1,232 @@
+/* ─── Container ───────────────────────────────────────────── */
+.wt-widget {
+    background-color: rgba(36, 36, 36, 0.95);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    border-radius: 16px;
+    padding: 12px;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.5);
+    min-height: 60px;
+}
+
+/* ─── Header ──────────────────────────────────────────────── */
+.wt-header {
+    padding: 0 4px 4px 10px;
+    margin-bottom: 4px;
+    spacing: 8px;
+}
+
+.wt-title {
+    font-size: 14px;
+    font-weight: bold;
+    color: #ffffff;
+}
+
+.wt-last-updated {
+    font-size: 11px;
+    color: rgba(255, 255, 255, 0.45);
+    margin-top: 2px;
+}
+
+.wt-icon-btn {
+    color: rgba(255, 255, 255, 0.7);
+    background-color: rgba(255, 255, 255, 0.08);
+    padding: 6px;
+}
+
+.wt-icon-btn:hover {
+    color: #ffffff;
+    background-color: rgba(255, 255, 255, 0.14);
+}
+
+.wt-icon-btn:active {
+    color: #ffffff;
+    background-color: rgba(255, 255, 255, 0.22);
+}
+
+/* ─── Status / empty state ────────────────────────────────── */
+.wt-status {
+    font-size: 12px;
+    color: rgba(255, 255, 255, 0.55);
+    padding: 8px 10px;
+}
+
+/* ─── Summary line ───────────────────────────────────────── */
+.wt-summary-line {
+    padding: 6px 10px;
+    spacing: 4px;
+}
+
+.wt-summary-checkin {
+    font-size: 14px;
+    font-weight: bold;
+    color: rgba(255, 255, 255, 0.85);
+}
+
+.wt-summary-arrow {
+    font-size: 14px;
+    color: rgba(255, 255, 255, 0.35);
+}
+
+.wt-summary-elapsed {
+    font-size: 14px;
+    font-weight: bold;
+    color: #78aeed;
+}
+
+.wt-summary-diff-pos {
+    font-size: 12px;
+    font-weight: bold;
+    color: #6dd898;
+}
+
+.wt-summary-diff-neg {
+    font-size: 12px;
+    font-weight: bold;
+    color: #f07078;
+}
+
+/* ─── Compact stats (2×2 grid) ───────────────────────────── */
+.wt-stats-box {
+    background-color: rgba(255, 255, 255, 0.04);
+    border-radius: 10px;
+    padding: 6px 12px;
+    margin: 2px 4px;
+    spacing: 2px;
+}
+
+.wt-stats-row {
+    spacing: 6px;
+}
+
+.wt-stat-key {
+    font-size: 11px;
+    color: rgba(255, 255, 255, 0.45);
+}
+
+.wt-stat-val {
+    font-size: 12px;
+    color: rgba(255, 255, 255, 0.85);
+}
+
+/* ─── Action buttons (출근 / 퇴근 / 외출) ────────────────── */
+.wt-actions {
+    spacing: 8px;
+    padding: 4px 4px;
+}
+
+.wt-action-btn {
+    border: none;
+    border-radius: 10px;
+    padding: 10px 8px;
+    font-size: 13px;
+    font-weight: bold;
+    text-align: center;
+}
+
+/* 출근 — green */
+.wt-action-checkin {
+    background-color: rgba(109, 216, 152, 0.18);
+    color: #6dd898;
+}
+
+.wt-action-checkin:hover {
+    background-color: rgba(109, 216, 152, 0.30);
+}
+
+.wt-action-checkin:active {
+    background-color: rgba(109, 216, 152, 0.45);
+}
+
+.wt-action-checkin.wt-action-active {
+    background-color: rgba(109, 216, 152, 0.10);
+    color: rgba(109, 216, 152, 0.4);
+}
+
+/* 퇴근 — red */
+.wt-action-checkout {
+    background-color: rgba(240, 112, 120, 0.18);
+    color: #f07078;
+}
+
+.wt-action-checkout:hover {
+    background-color: rgba(240, 112, 120, 0.30);
+}
+
+.wt-action-checkout:active {
+    background-color: rgba(240, 112, 120, 0.45);
+}
+
+.wt-action-checkout.wt-action-active {
+    background-color: rgba(240, 112, 120, 0.10);
+    color: rgba(240, 112, 120, 0.4);
+}
+
+/* 퇴근 urgent — pulsing red when over limit */
+.wt-action-checkout-urgent {
+    background-color: rgba(240, 112, 120, 0.35);
+    color: #ffffff;
+}
+
+.wt-action-checkout-urgent:hover {
+    background-color: rgba(240, 112, 120, 0.50);
+}
+
+.wt-action-checkout-urgent:active {
+    background-color: rgba(240, 112, 120, 0.65);
+}
+
+/* 외출 — blue/neutral */
+.wt-action-pause {
+    background-color: rgba(120, 174, 237, 0.18);
+    color: #78aeed;
+}
+
+.wt-action-pause:hover {
+    background-color: rgba(120, 174, 237, 0.30);
+}
+
+.wt-action-pause:active {
+    background-color: rgba(120, 174, 237, 0.45);
+}
+
+/* 연장근무 — orange */
+.wt-action-overtime {
+    background-color: rgba(255, 183, 77, 0.18);
+    color: #ffb74d;
+}
+
+.wt-action-overtime:hover {
+    background-color: rgba(255, 183, 77, 0.30);
+}
+
+.wt-action-overtime:active {
+    background-color: rgba(255, 183, 77, 0.45);
+}
+
+/* Disabled state for all action buttons */
+.wt-action-disabled {
+    background-color: rgba(255, 255, 255, 0.04);
+    color: rgba(255, 255, 255, 0.25);
+}
+
+.wt-action-disabled:hover {
+    background-color: rgba(255, 255, 255, 0.04);
+    color: rgba(255, 255, 255, 0.25);
+}
+
+/* ─── Sparkline ──────────────────────────────────────────── */
+.wt-sparkline-box {
+    padding: 0;
+    margin: 2px 4px;
+    spacing: 2px;
+}
+
+.wt-sparkline-label {
+    font-size: 11px;
+    color: rgba(255, 255, 255, 0.45);
+    margin-left: 6px;
+}
+
+.wt-sparkline {
+    border-radius: 6px;
+}

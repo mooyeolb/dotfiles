@@ -1,0 +1,8 @@
+{
+  "name": "WorkTime Widget",
+  "description": "Floating widget showing Naver HR work time status",
+  "uuid": "worktime-widget@mooyeolb",
+  "version": 1,
+  "shell-version": ["49"],
+  "settings-schema": "org.gnome.shell.extensions.worktime-widget"
+}

@@ -6,8 +6,9 @@ import Pango from 'gi://Pango';
 import * as Main from 'resource:///org/gnome/shell/ui/main.js';
 import { Extension } from 'resource:///org/gnome/shell/extensions/extension.js';
 
-const REFRESH_INTERVAL_SECONDS = 300; // 5 minutes
+const REFRESH_INTERVAL_SECONDS = 600;
 const WIDGET_WIDTH = 320;
+const WIDGET_HEIGHT = 500;
 const WIDGET_MARGIN = 12;
 
 export default class JiraWidget extends Extension {
@@ -20,6 +21,7 @@ export default class JiraWidget extends Extension {
         this._startupCompleteId = null;
         this._overviewShowingId = null;
         this._overviewHiddenId = null;
+        this._monitorsChangedId = null;
         this._nextRefreshAt = 0;
         this._spinning = false;
         this._settingsChangedId = null;
@@ -27,6 +29,7 @@ export default class JiraWidget extends Extension {
         this._fetchCancellable = null;
         this._startupFallbackId = null;
         this._idleInitId = null;
+        this._hasData = false;
 
         this._settings = this.getSettings();
         this._migrateFromJsonConfig();
@@ -91,6 +94,10 @@ export default class JiraWidget extends Extension {
             this._widget.show();
         });
 
+        this._monitorsChangedId = global.display.connect('workareas-changed', () => {
+            this._repositionWidget();
+        });
+
         // Sync with current overview state (overview may already be visible
         // if the extension was enabled mid-session with overview open).
         if (Main.overview.visible)
@@ -129,6 +136,10 @@ export default class JiraWidget extends Extension {
         if (this._overviewHiddenId) {
             Main.overview.disconnect(this._overviewHiddenId);
             this._overviewHiddenId = null;
+        }
+        if (this._monitorsChangedId) {
+            global.display.disconnect(this._monitorsChangedId);
+            this._monitorsChangedId = null;
         }
         if (this._refreshTimer) {
             GLib.source_remove(this._refreshTimer);
@@ -185,6 +196,7 @@ export default class JiraWidget extends Extension {
             vertical: true,
             reactive: true,
             width: WIDGET_WIDTH,
+            height: WIDGET_HEIGHT,
         });
 
         // --- Header (drag handle) ---
@@ -196,7 +208,7 @@ export default class JiraWidget extends Extension {
 
         const titleBox = new St.BoxLayout({ vertical: true, x_expand: true });
         const title = new St.Label({
-            text: 'Jira Tasks',
+            text: 'Jira',
             style_class: 'jira-title',
         });
         this._lastUpdatedLabel = new St.Label({
@@ -206,14 +218,30 @@ export default class JiraWidget extends Extension {
         titleBox.add_child(title);
         titleBox.add_child(this._lastUpdatedLabel);
 
+        this._openBtn = new St.Button({
+            style_class: 'icon-button jira-icon-btn',
+            child: new St.Icon({ icon_name: 'go-home-symbolic', icon_size: 14 }),
+            reactive: true,
+        });
+        this._openBtn.connect('clicked', () => {
+            const baseUrl = this._settings.get_string('base-url').replace(/\/+$/, '');
+            if (!baseUrl) return;
+            try {
+                Gio.AppInfo.launch_default_for_uri(baseUrl, null);
+            } catch (_e) {
+                Gio.Subprocess.new(['xdg-open', baseUrl], Gio.SubprocessFlags.NONE);
+            }
+        });
+
         this._refreshBtn = new St.Button({
-            style_class: 'jira-icon-btn',
-            label: '↻',
+            style_class: 'icon-button jira-icon-btn',
+            child: new St.Icon({ icon_name: 'view-refresh-symbolic', icon_size: 14 }),
             reactive: true,
         });
         this._refreshBtn.connect('clicked', () => this._loadIssues());
 
         header.add_child(titleBox);
+        header.add_child(this._openBtn);
         header.add_child(this._refreshBtn);
 
         // --- Status label ---
@@ -238,13 +266,12 @@ export default class JiraWidget extends Extension {
         this._widget.add_child(this._statusLabel);
         this._widget.add_child(this._scrollView);
 
-        // In GNOME Shell 49, backgroundGroup is inside window_group.
-        // Add widget to window_group above the background but below windows.
-        // If window_group won't render it, fall back to addTopChrome.
-        global.window_group.add_child(this._widget);
-        const bg = global.window_group.get_first_child();
-        if (bg && bg !== this._widget)
-            global.window_group.set_child_above_sibling(this._widget, bg);
+        // MetaWindowGroup always paints non-MetaWindowActor children on top
+        // of windows regardless of Z-order.  Adding the widget to the
+        // backgroundGroup (first child of window_group) places it in the
+        // background layer — above the wallpaper but below all windows.
+        const bgGroup = global.window_group.get_first_child();
+        bgGroup.add_child(this._widget);
 
         this._repositionWidget();
         this._setupDrag(header);
@@ -272,7 +299,7 @@ export default class JiraWidget extends Extension {
                 const target = global.stage.get_actor_at_pos(
                     Clutter.PickMode.REACTIVE, ex, ey
                 );
-                if (target === this._refreshBtn)
+                if (this._refreshBtn.contains(target) || this._openBtn.contains(target))
                     return Clutter.EVENT_PROPAGATE;
 
                 this._dragEnabled = true;
@@ -298,20 +325,25 @@ export default class JiraWidget extends Extension {
 
     _startSpinner() {
         this._spinning = true;
-        this._refreshBtn.set_pivot_point(0.5, 0.5);
-        this._refreshBtn.rotation_angle_z = 0;
+        const icon = this._refreshBtn.get_first_child();
+        if (icon) {
+            icon.set_pivot_point(0.5, 0.5);
+            icon.rotation_angle_z = 0;
+        }
         this._tickSpin();
     }
 
     _tickSpin() {
         if (!this._spinning) return;
-        this._refreshBtn.ease({
+        const icon = this._refreshBtn.get_first_child();
+        if (!icon) return;
+        icon.ease({
             rotation_angle_z: 360,
             duration: 700,
             mode: Clutter.AnimationMode.LINEAR,
             onComplete: () => {
                 if (this._spinning) {
-                    this._refreshBtn.rotation_angle_z = 0;
+                    icon.rotation_angle_z = 0;
                     GLib.idle_add(GLib.PRIORITY_DEFAULT, () => {
                         this._tickSpin();
                         return GLib.SOURCE_REMOVE;
@@ -324,8 +356,11 @@ export default class JiraWidget extends Extension {
     _stopSpinner() {
         this._spinning = false;
         if (this._refreshBtn) {
-            this._refreshBtn.remove_all_transitions();
-            this._refreshBtn.rotation_angle_z = 0;
+            const icon = this._refreshBtn.get_first_child();
+            if (icon) {
+                icon.remove_all_transitions();
+                icon.rotation_angle_z = 0;
+            }
         }
     }
 
@@ -450,7 +485,16 @@ export default class JiraWidget extends Extension {
                     this._showError(e.message);
                 }
             } else {
-                this._showError(stderr.trim() || 'Unknown error from fetch script');
+                const isNetworkError = p.get_exit_status() === 2;
+                const msg = stderr.trim() || 'Unknown error';
+                if (isNetworkError && this._hasData) {
+                    this._lastUpdatedLabel.text =
+                        `${this._lastUpdatedTime ?? ''} · ${msg}`.trim();
+                } else {
+                    this._showError(msg);
+                    this._lastUpdatedLabel.text = msg;
+                }
+                this._scheduleNextRefresh();
             }
         });
     }
@@ -476,6 +520,7 @@ export default class JiraWidget extends Extension {
     }
 
     _displayIssues(issues) {
+        this._hasData = true;
         this._issuesList.destroy_all_children();
 
         if (!issues || issues.length === 0) {

@@ -93,6 +93,24 @@ def main():
         body = e.read().decode(errors="replace")
         print(f"HTTP {e.code}: {body}", file=sys.stderr)
         sys.exit(1)
+    except urllib.error.URLError as e:
+        reason = str(e.reason) if hasattr(e, "reason") else str(e)
+        if "Name or service not known" in reason or "getaddrinfo" in reason:
+            print("No network", file=sys.stderr)
+        elif "Connection refused" in reason or "Connection reset" in reason:
+            print("Server unreachable", file=sys.stderr)
+        elif "timed out" in reason:
+            print("Connection timed out", file=sys.stderr)
+        else:
+            print(f"Connection failed: {reason}", file=sys.stderr)
+        sys.exit(2)
+    except (TimeoutError, OSError) as e:
+        msg = str(e)
+        if "timed out" in msg:
+            print("Connection timed out", file=sys.stderr)
+        else:
+            print(f"Connection failed: {msg}", file=sys.stderr)
+        sys.exit(2)
     except Exception as e:
         print(str(e), file=sys.stderr)
         sys.exit(1)

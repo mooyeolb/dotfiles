@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schemalist>
+  <schema id="org.gnome.shell.extensions.worktime-widget"
+          path="/org/gnome/shell/extensions/worktime-widget/">
+    <key name="company" type="s">
+      <default>'naver'</default>
+      <summary>Company</summary>
+      <description>Company selector: 'naver' or 'line'</description>
+    </key>
+    <key name="username" type="s">
+      <default>''</default>
+      <summary>Username</summary>
+      <description>SSO login username (employee ID)</description>
+    </key>
+    <key name="password" type="s">
+      <default>''</default>
+      <summary>Password</summary>
+      <description>SSO login password</description>
+    </key>
+    <key name="workplace" type="s">
+      <default>'REMOTE'</default>
+      <summary>Workplace</summary>
+      <description>Workplace type for check-in: 'REMOTE' or 'OFFICE'</description>
+    </key>
+    <key name="base-url-override" type="s">
+      <default>''</default>
+      <summary>Base URL Override</summary>
+      <description>Override the default HR system URL (leave empty for default)</description>
+    </key>
+  </schema>
+</schemalist>
