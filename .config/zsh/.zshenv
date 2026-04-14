@@ -9,7 +9,10 @@ export TERM=xterm-256color \
        XDG_DATA_HOME="${HOME}/.local/share" \
        XDG_STATE_HOME="${HOME}/.local/state" \
        XDG_DATA_DIRS="/usr/local/share:/usr/share:${HOME}/.local/share" \
-       XDG_CONFIG_DIRS="/etc/xdg:${HOME}/.config"
+       XDG_CONFIG_DIRS="/etc/xdg:${HOME}/.config" \
+       DOCKER_CONFIG="${HOME}/.config/docker" \
+       KUBECONFIG="${HOME}/.config/kube/config" \
+       npm_config_cache="${HOME}/.cache/npm"
 
 
 # PATH
@@ -33,8 +36,8 @@ if [ -f "/usr/bin/go" ]; then
     export PATH=${PATH:+${PATH}:}$GOROOT/bin:$GOPATH/bin
 fi
 
-if [ -f "$HOME/.local/share/cargo/bin/cargo" ]; then
-    export RUSTUP_HOME=$HOME/.local/share/rustup
-    export CARGO_HOME=$HOME/.local/share/cargo
-    . "/home/mooyeolb/.local/share/cargo/env"
+if [ -f "$XDG_DATA_HOME/cargo/bin/cargo" ]; then
+    export RUSTUP_HOME="$XDG_DATA_HOME/rustup"
+    export CARGO_HOME="$XDG_DATA_HOME/cargo"
+    . "$CARGO_HOME/env"
 fi
