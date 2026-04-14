@@ -1,0 +1,24 @@
+#!/bin/sh
+# Post-clone setup for dotfiles
+# Run after: config checkout
+
+set -e
+
+EXT_DIR="$HOME/.local/share/gnome-shell/extensions"
+
+# Compile GSettings schemas for custom extensions
+for schema_dir in "$EXT_DIR"/*@mooyeolb/schemas; do
+    if [ -f "$schema_dir"/*.gschema.xml ]; then
+        glib-compile-schemas "$schema_dir"
+        echo "compiled schemas: $(dirname "$schema_dir" | xargs basename)"
+    fi
+done
+
+# Enable custom extensions
+for ext in "$EXT_DIR"/*@mooyeolb; do
+    uuid=$(basename "$ext")
+    gnome-extensions enable "$uuid" 2>/dev/null && echo "enabled: $uuid" || true
+done
+
+echo ""
+echo "Done. Log out and back in to load extensions."
