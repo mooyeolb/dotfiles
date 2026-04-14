@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schemalist>
+  <schema id="org.gnome.shell.extensions.jira-widget"
+          path="/org/gnome/shell/extensions/jira-widget/">
+
+    <key name="base-url" type="s">
+      <default>'https://jira.navercorp.com'</default>
+      <summary>Jira Base URL</summary>
+      <description>The base URL of your Jira instance (e.g. https://jira.example.com)</description>
+    </key>
+
+    <key name="token" type="s">
+      <default>''</default>
+      <summary>Personal Access Token</summary>
+      <description>Jira Personal Access Token used for Bearer authentication</description>
+    </key>
+
+    <key name="jql" type="s">
+      <default>'assignee = currentUser() AND resolution = Unresolved ORDER BY updated DESC'</default>
+      <summary>JQL Filter</summary>
+      <description>JQL query used to fetch issues</description>
+    </key>
+
+    <key name="max-results" type="i">
+      <default>20</default>
+      <range min="1" max="100"/>
+      <summary>Maximum Results</summary>
+      <description>Maximum number of issues to fetch per refresh</description>
+    </key>
+
+    <key name="verify-ssl" type="b">
+      <default>true</default>
+      <summary>Verify SSL</summary>
+      <description>Whether to verify the server's SSL certificate. Disable only for self-signed certificates.</description>
+    </key>
+
+  </schema>
+</schemalist>

@@ -1,0 +1,8 @@
+{
+  "name": "Jira Widget",
+  "description": "Floating widget to track your Jira tasks",
+  "uuid": "jira-widget@mooyeolb",
+  "version": 2,
+  "shell-version": ["49"],
+  "settings-schema": "org.gnome.shell.extensions.jira-widget"
+}

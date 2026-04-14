@@ -1,0 +1,152 @@
+/* ─── Container ───────────────────────────────────────────── */
+/* Matches GNOME Shell popup/calendar panel style */
+.jira-widget {
+    background-color: rgba(36, 36, 36, 0.95);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    border-radius: 16px;
+    padding: 12px;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.5);
+    min-height: 60px;
+}
+
+/* ─── Header ──────────────────────────────────────────────── */
+.jira-header {
+    padding: 0 10px 8px;
+    margin-bottom: 6px;
+    spacing: 8px;
+}
+
+.jira-title {
+    font-size: 14px;
+    font-weight: bold;
+    color: #ffffff;
+}
+
+.jira-last-updated {
+    font-size: 11px;
+    color: rgba(255, 255, 255, 0.45);
+    margin-top: 2px;
+}
+
+.jira-icon-btn {
+    color: rgba(255, 255, 255, 0.7);
+    font-size: 16px;
+    background-color: rgba(255, 255, 255, 0.08);
+    border: none;
+    border-radius: 99px;
+    padding: 6px 8px;
+}
+
+.jira-icon-btn:hover {
+    color: #ffffff;
+    background-color: rgba(255, 255, 255, 0.14);
+}
+
+.jira-icon-btn:active {
+    color: #ffffff;
+    background-color: rgba(255, 255, 255, 0.22);
+}
+
+/* ─── Status / empty state ────────────────────────────────── */
+.jira-status {
+    font-size: 12px;
+    color: rgba(255, 255, 255, 0.55);
+    padding: 8px 4px;
+}
+
+/* ─── Scroll view (hidden scrollbar + bottom fade) ────────── */
+.jira-scroll {
+    max-height: 440px;
+    -st-vfade-offset: 48px;
+}
+
+.jira-scroll StScrollBar {
+    width: 0;
+    min-width: 0;
+}
+
+.jira-issues-list {
+    spacing: 2px;
+}
+
+/* ─── Issue item ──────────────────────────────────────────── */
+.jira-issue-item {
+    background-color: transparent;
+    border: none;
+    border-radius: 12px;
+    padding: 8px 10px;
+    text-align: left;
+}
+
+.jira-issue-item:hover {
+    background-color: rgba(255, 255, 255, 0.06);
+}
+
+.jira-issue-item:active {
+    background-color: rgba(255, 255, 255, 0.12);
+}
+
+.jira-issue-key {
+    font-size: 12px;
+    font-weight: bold;
+    color: #78aeed;
+    margin-right: 6px;
+}
+
+.jira-priority {
+    font-size: 11px;
+    color: rgba(255, 255, 255, 0.45);
+    margin-right: 4px;
+}
+
+.jira-issue-summary {
+    font-size: 12px;
+    color: rgba(255, 255, 255, 0.85);
+    margin-top: 3px;
+}
+
+/* ─── Status badges (pill shape, GNOME accent palette) ───── */
+.jira-status-badge {
+    font-size: 10px;
+    font-weight: bold;
+    padding: 2px 8px;
+    border-radius: 99px;
+    color: rgba(255, 255, 255, 0.8);
+    background-color: rgba(255, 255, 255, 0.08);
+}
+
+/* To Do / Open / Backlog — neutral gray */
+.status-to-do,
+.status-open,
+.status-backlog {
+    background-color: rgba(255, 255, 255, 0.10);
+    color: rgba(255, 255, 255, 0.7);
+}
+
+/* In Progress / In Development — GNOME blue #3584e4 */
+.status-in-progress,
+.status-in-development {
+    background-color: rgba(53, 132, 228, 0.30);
+    color: #78aeed;
+}
+
+/* In Review / Code Review — GNOME purple #9141ac */
+.status-in-review,
+.status-code-review {
+    background-color: rgba(145, 65, 172, 0.30);
+    color: #c090e0;
+}
+
+/* Done / Closed / Resolved — GNOME green #33d17a */
+.status-done,
+.status-closed,
+.status-resolved {
+    background-color: rgba(51, 209, 122, 0.25);
+    color: #6dd898;
+}
+
+/* Blocked — GNOME red #e01b24 */
+.status-blocked {
+    background-color: rgba(224, 27, 36, 0.30);
+    color: #f07078;
+}
