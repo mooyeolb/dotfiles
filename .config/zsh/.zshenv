@@ -12,7 +12,10 @@ export TERM=xterm-256color \
        XDG_CONFIG_DIRS="/etc/xdg:${HOME}/.config" \
        DOCKER_CONFIG="${HOME}/.config/docker" \
        KUBECONFIG="${HOME}/.config/kube/config" \
-       npm_config_cache="${HOME}/.cache/npm"
+       npm_config_cache="${HOME}/.cache/npm" \
+       ANDROID_USER_HOME="${HOME}/.local/share/android" \
+       CUDA_CACHE_PATH="${HOME}/.cache/nv" \
+       NUGET_PACKAGES="${HOME}/.local/share/nuget/packages"
 
 
 # PATH
